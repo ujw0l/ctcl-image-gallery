@@ -40,7 +40,8 @@ if(class_exists('ctcLite')){
    */
 
   public function enequeFrontendJs(){
-    wp_enqueue_script('ctcligFrontendJs', CTCL_DIR_PATH.'js/ctcl-image-gal-fe.js');
+    wp_enqueue_script('ctclJsOverlay', CTCL_DIR_PATH.'js/js-overlay.js',array());
+    wp_enqueue_script('ctcligFrontendJs', CTCLIG_DIR_PATH.'js/ctcl-image-gal-fe.js',array('ctclJsOverlay'));
   }
 
   /**
@@ -50,7 +51,7 @@ if(class_exists('ctcLite')){
    */
 
   public function enequeFrontendCss(){
-    wp_enqueue_style( 'ctclFrontendCss', CTCL_DIR_PATH.'css/ctcl-image-gal-fe.css'); 
+    wp_enqueue_style( 'ctclFrontendCss', CTCLIG_DIR_PATH.'css/ctcl-image-gal-fe.css'); 
 }
 
 

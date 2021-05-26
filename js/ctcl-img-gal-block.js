@@ -19,30 +19,17 @@ registerBlockType('ctcl-image-gallery/ctcl-image-gallery', {
     attributes: {
         galItems: { type: 'Array', default: [] },
         mainImage: { type: 'String', default: '' },
-        timeStamp: { type: 'String', default: '1' },
+        clntId: { type: 'String', default: '' },
         mainImgWd: { type: 'Number', default: 450 },
         mainImgHt: { type: 'Number', default: 700 },
         mainImgFinalWd: { type: 'Number', default: 450 },
         mainImgFinalHt: { type: 'Number', default: 700 },
     },
 
-    edit: ({ attributes, setAttributes }) => {
-
+    edit: ({ attributes, setAttributes, clientId }) => {
+        setAttributes({ clntId: clientId });
         useEffect(() => {
-            /*
-                       Array.from(document.querySelectorAll('.ctclg-gal-img')).map(x => {
-           
-           
-                          
-                           x.addEventListener('mouseover', e => {
-                               document.querySelector(`#ctcl-ig-main-img-${e.target.getAttribute('data-ts')}`).setAttribute('data-img-num', e.target.getAttribute('data-image-num'));
-                           });
-                           });
-                           */
-
-            console.log(attributes.galItems.length);
-
-            let elem = document.querySelector(`#ctcl-ig-main-img-${attributes.timeStamp}`);
+            let elem = document.querySelector(`#ctcl-ig-main-img-${attributes.clntId}`);
             if (null != elem) {
                 setAttributes({ mainImgFinalWd: elem.offsetWidth });
                 setAttributes({ mainImgFinalHt: elem.offsetHeight })
@@ -60,12 +47,12 @@ registerBlockType('ctcl-image-gallery/ctcl-image-gallery', {
         return el('div', { className: 'ctcl-image-gallery-block' },
 
 
-            0 < attributes.mainImage.length ? el('div', { 'data-img-num': '0', 'data-ts': `${attributes.timeStamp}`, className: 'ctclig-main-image', id: `ctcl-ig-main-img-${attributes.timeStamp}`, style: { width: `${attributes.mainImgWd}px`, height: `${attributes.mainImgHt}px`, backgroundImage: `url("${attributes.mainImage}")` } }) : '',
+            0 < attributes.mainImage.length ? el('div', { 'data-img-num': '0', 'data-ts': `${attributes.clntId}`, className: 'ctclig-main-image', id: `ctcl-ig-main-img-${attributes.clntId}`, style: { width: `${attributes.mainImgWd}px`, height: `${attributes.mainImgHt}px`, backgroundImage: `url("${attributes.mainImage}")` } }) : '',
             2 <= attributes.galItems.length ? el('div', { className: 'ctclig-image-list', style: { width: `${attributes.mainImgFinalWd}px`, height: '74px', overflowX: 'auto', overflowY: 'hidden', marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
                 el('div', { style: { width: `${attributes.galItems.length * 74}px`, marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
-                    attributes.galItems.map((x, i) => el('img', { className: 'ctclg-gal-img', id: `ctclif-gal-img-${attributes.timeStamp}-${i}`, 'data-ts': `${attributes.timeStamp}`, 'data-image-num': `${i}`, style: { width: '70px', height: '70px', margin: '2px' }, onMouseOver: () => { setAttributes({ mainImage: x.url }) }, key: i, title: x.caption, src: x.url }))),
+                    attributes.galItems.map((x, i) => el('img', { className: 'ctclg-gal-img', id: `ctclif-gal-img-${attributes.clntId}-${i}`, 'data-ts': `${attributes.clntId}`, 'data-image-num': `${i}`, style: { border: '1px solid rgba(0,0,0,1)', width: '70px', height: '70px', margin: '2px' }, onMouseOver: () => { setAttributes({ mainImage: x.url }) }, key: i, title: x.caption, src: x.url }))),
             ) : '',
-            el('div', { style: { border: '1px solid rgba(0,0,0,1)', backgroundColor: 'rgba(255,255,255,1)', } },
+            el('div', { style: { border: '1px solid rgb(61, 148, 218)', backgroundColor: 'rgba(255,255,255,1)', } },
 
                 el(MediaUpload, {
                     title: __('Select  product images for gallery ', 'ctcl-image-gallery'),
@@ -76,10 +63,10 @@ registerBlockType('ctcl-image-gallery/ctcl-image-gallery', {
                         setAttributes({ galItems: gal });
                         setAttributes({ mainImage: gal[0].url });
                     },
-                    render: ({ open }) => el('div', { style: { width: '100%', backgroundColor: 'rgba(255,255,,255,1)', color: 'rgba(0,0,0,1)', padding: '10px' } },
+                    render: ({ open }) => el('div', { style: { width: '100%', backgroundColor: 'rgba(255,255,,255,1)', color: 'rgb(61, 148, 218)', padding: '10px' } },
                         el('h4', { className: 'dashicons-before dashicons-format-gallery' }, __('Product Image Gallery ')),
 
-                        el(Button, { style: { marginLeft: 'auto', marginRight: 'auto', display: 'block', color: 'rgba(0,0,0,1)', border: '1px solid rgba(0,0,0,1)' }, className: "ctclig-media-button dashicons-before dashicons-format-gallery", onClick: open }, __(" Select Images", "ctcl-image-gallery")),
+                        el(Button, { style: { marginLeft: 'auto', marginRight: 'auto', display: 'block', color: 'rgb(61, 148, 218)', border: '1px solid rgb(61, 148, 218)' }, className: "ctclig-media-button dashicons-before dashicons-format-gallery", onClick: open }, __(" Select Images", "ctcl-image-gallery")),
                     ),
                 }),
 
@@ -112,9 +99,9 @@ registerBlockType('ctcl-image-gallery/ctcl-image-gallery', {
     },
     save: ({ attributes }) => el('div', { className: 'ctcl-image-gallery' },
 
-        0 < attributes.mainImage.length ? el('div', { 'data-img-num': '0', 'data-ts': `${attributes.timeStamp}`, className: 'ctclig-main-image', id: `ctcl-ig-main-img-${attributes.timeStamp}`, style: { width: `${attributes.mainImgFinalWd}px`, height: `${attributes.mainImgFinalHt}px`, backgroundImage: `url("${attributes.mainImage}")` } }) : '',
+        0 < attributes.mainImage.length ? el('div', { 'data-img-num': '0', 'data-ts': `${attributes.clntId}`, className: 'ctclig-main-image', id: `ctcl-ig-main-img-${attributes.clntId}`, style: { width: `${attributes.mainImgFinalWd}px`, height: `${attributes.mainImgFinalHt}px`, backgroundImage: `url("${attributes.mainImage}")` } }) : '',
         el('div', { className: 'ctclig-image-list', style: { width: `${attributes.mainImgFinalWd}px`, height: '74px', overflowX: 'auto', overflowY: 'hidden', marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
             el('div', { style: { width: `${attributes.galItems.length * 74}px`, marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
-                1 < attributes.galItems.length ? attributes.galItems.map((x, i) => el('img', { className: 'ctclg-gal-img', id: `ctclif-gal-img-${attributes.timeStamp}-${i}`, 'data-ts': `${attributes.timeStamp}`, 'data-image-num': `${i}`, style: { width: '70px', height: '70px', margin: '2px' }, onMouseOver: () => { setAttributes({ mainImage: x.url }) }, key: i, title: x.caption, src: x.url })) : ''),
+                1 < attributes.galItems.length ? attributes.galItems.map((x, i) => el('img', { className: 'ctclg-gal-img', id: `ctclif-gal-img-${attributes.clntId}-${i}`, 'data-ts': `${attributes.clntId}`, 'data-image-num': `${i}`, style: { border: '1px solid rgba(0,0,0,1)', width: '70px', height: '70px', margin: '2px' }, onMouseOver: () => { setAttributes({ mainImage: x.url }) }, key: i, title: x.caption, src: x.url })) : ''),
         )),
 });

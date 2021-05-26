@@ -10,6 +10,9 @@
     scrollbar-width: none;  /* Firefox */
   }
 
+  .ctcl-image-gallery{
+      cursor: pointer;
+  }
   .ctclig-main-image{
 
     background: url('') center center / contain no-repeat rgb(255, 255, 255,0.5);
