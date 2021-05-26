@@ -19,29 +19,37 @@ registerBlockType('ctcl-image-gallery/ctcl-image-gallery', {
     attributes: {
         galItems: { type: 'Array', default: [] },
         mainImage: { type: 'String', default: '' },
-        timeStamp: { type: 'String', default: Date.now() },
+        timeStamp: { type: 'String', default: '1' },
         mainImgWd: { type: 'Number', default: 450 },
-        mainImgHt: { type: 'Number', default: 700 }
+        mainImgHt: { type: 'Number', default: 700 },
+        mainImgFinalWd: { type: 'Number', default: 450 },
+        mainImgFinalHt: { type: 'Number', default: 700 },
     },
 
     edit: ({ attributes, setAttributes }) => {
 
         useEffect(() => {
+            /*
+                       Array.from(document.querySelectorAll('.ctclg-gal-img')).map(x => {
+           
+           
+                          
+                           x.addEventListener('mouseover', e => {
+                               document.querySelector(`#ctcl-ig-main-img-${e.target.getAttribute('data-ts')}`).setAttribute('data-img-num', e.target.getAttribute('data-image-num'));
+                           });
+                           });
+                           */
 
-            Array.from(document.querySelectorAll('.ctclg-gal-img')).map(x => {
-                /*
-                x.addEventListener('mouseover', e => {
-                    document.querySelector(`#ctcl-ig-main-img-${e.target.getAttribute('data-ts')}`).setAttribute('data-img-num', e.target.getAttribute('data-image-num'));
-                });
-                */
+            console.log(attributes.galItems.length);
 
-                let elem = document.querySelector(`#ctcl-ig-main-img-${attributes.timeStamp}`);
+            let elem = document.querySelector(`#ctcl-ig-main-img-${attributes.timeStamp}`);
+            if (null != elem) {
+                setAttributes({ mainImgFinalWd: elem.offsetWidth });
+                setAttributes({ mainImgFinalHt: elem.offsetHeight })
+            }
 
-                console.log(elem.offsetHeight, elem.offsetWidth);
 
-            });
-
-        }, [attributes.mainImgHt, attributes.mainImageWd])
+        }, [attributes.mainImgHt, attributes.mainImgWd, attributes.galItems])
 
 
         useEffect(() => {
@@ -51,12 +59,12 @@ registerBlockType('ctcl-image-gallery/ctcl-image-gallery', {
 
         return el('div', { className: 'ctcl-image-gallery-block' },
 
-            el('div', {},
-                0 < attributes.mainImage.length ? el('div', { 'data-img-num': '0', 'data-ts': `${attributes.timeStamp}`, className: 'ctclig-main-image', id: `ctcl-ig-main-img-${attributes.timeStamp}`, style: { width: `${attributes.mainImgWd}px`, height: `${attributes.mainImgHt}px`, backgroundImage: `url("${attributes.mainImage}")` } }) : '',
-                el('div', { className: 'ctclig-image-list', style: { width: '100%', height: '74px', overflowX: 'auto', overflowY: 'hidden' } },
-                    el('div', { style: { width: `${attributes.galItems.length * 74}px`, marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
-                        1 < attributes.galItems.length ? attributes.galItems.map((x, i) => el('img', { className: 'ctclg-gal-img', id: `ctclif-gal-img-${attributes.timeStamp}-${i}`, 'data-ts': `${attributes.timeStamp}`, 'data-image-num': `${i}`, style: { width: '70px', height: '70px', margin: '2px' }, onMouseOver: () => { setAttributes({ mainImage: x.url }) }, key: i, title: x.caption, src: x.url })) : ''),
-                )),
+
+            0 < attributes.mainImage.length ? el('div', { 'data-img-num': '0', 'data-ts': `${attributes.timeStamp}`, className: 'ctclig-main-image', id: `ctcl-ig-main-img-${attributes.timeStamp}`, style: { width: `${attributes.mainImgWd}px`, height: `${attributes.mainImgHt}px`, backgroundImage: `url("${attributes.mainImage}")` } }) : '',
+            2 <= attributes.galItems.length ? el('div', { className: 'ctclig-image-list', style: { width: `${attributes.mainImgFinalWd}px`, height: '74px', overflowX: 'auto', overflowY: 'hidden', marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
+                el('div', { style: { width: `${attributes.galItems.length * 74}px`, marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
+                    attributes.galItems.map((x, i) => el('img', { className: 'ctclg-gal-img', id: `ctclif-gal-img-${attributes.timeStamp}-${i}`, 'data-ts': `${attributes.timeStamp}`, 'data-image-num': `${i}`, style: { width: '70px', height: '70px', margin: '2px' }, onMouseOver: () => { setAttributes({ mainImage: x.url }) }, key: i, title: x.caption, src: x.url }))),
+            ) : '',
             el('div', { style: { border: '1px solid rgba(0,0,0,1)', backgroundColor: 'rgba(255,255,255,1)', } },
 
                 el(MediaUpload, {
@@ -79,7 +87,7 @@ registerBlockType('ctcl-image-gallery/ctcl-image-gallery', {
                     el(PanelBody, null,
                         el(RangeControl, {
                             label: __('Image width in pixel (px)', 'ctc-gal'),
-                            min: 75,
+                            min: 148,
                             max: window.innerWidth,
                             onChange: val => setAttributes({ mainImgWd: val }),
                             value: attributes.mainImageWd,
@@ -87,7 +95,7 @@ registerBlockType('ctcl-image-gallery/ctcl-image-gallery', {
 
                         el(RangeControl, {
                             label: __('Image height in pixel(px)', 'ctc-gal'),
-                            min: 75,
+                            min: 148,
                             max: window.innerHeight,
                             onChange: val => setAttributes({ mainImgHt: val }),
                             value: attributes.mainImageHt,
@@ -102,8 +110,11 @@ registerBlockType('ctcl-image-gallery/ctcl-image-gallery', {
 
 
     },
-    save: () => el('div', { className: 'ctcl-image-gallery' }),
+    save: ({ attributes }) => el('div', { className: 'ctcl-image-gallery' },
 
-
-
+        0 < attributes.mainImage.length ? el('div', { 'data-img-num': '0', 'data-ts': `${attributes.timeStamp}`, className: 'ctclig-main-image', id: `ctcl-ig-main-img-${attributes.timeStamp}`, style: { width: `${attributes.mainImgFinalWd}px`, height: `${attributes.mainImgFinalHt}px`, backgroundImage: `url("${attributes.mainImage}")` } }) : '',
+        el('div', { className: 'ctclig-image-list', style: { width: `${attributes.mainImgFinalWd}px`, height: '74px', overflowX: 'auto', overflowY: 'hidden', marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
+            el('div', { style: { width: `${attributes.galItems.length * 74}px`, marginLeft: 'auto', marginRight: 'auto', display: 'block' } },
+                1 < attributes.galItems.length ? attributes.galItems.map((x, i) => el('img', { className: 'ctclg-gal-img', id: `ctclif-gal-img-${attributes.timeStamp}-${i}`, 'data-ts': `${attributes.timeStamp}`, 'data-image-num': `${i}`, style: { width: '70px', height: '70px', margin: '2px' }, onMouseOver: () => { setAttributes({ mainImage: x.url }) }, key: i, title: x.caption, src: x.url })) : ''),
+        )),
 });
