@@ -39,11 +39,6 @@ registerBlockType('ctcl-image-gallery/ctcl-image-gallery', {
         }, [attributes.mainImgHt, attributes.mainImgWd, attributes.galItems])
 
 
-        useEffect(() => {
-
-
-        }, [attributes.galItems])
-
         return el('div', { className: 'ctcl-image-gallery-block' },
 
 
