@@ -14,7 +14,7 @@ registerBlockType('ctcl-image-gallery/ctcl-image-gallery', {
     icon: 'format-gallery',
     description: __("CTC Lite block to create product image gallery", "ctcl-image-gallery"),
     category: 'ctc-lite-blocks',
-    keywords: [__('image gallery', 'ctc-lite'), __('product album', 'ctcl-image-gallery')],
+    keywords: [__('image gallery', 'ctcl-image-gallery'), __('product album', 'ctcl-image-gallery')],
     example: {},
     attributes: {
         galItems: { type: 'Array', default: [] },
