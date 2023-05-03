@@ -8,10 +8,10 @@ Requires PHP:      7.4.9
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Gutenberg block to add product image gallery for CTC Lite ecommerce plugin
+Gutenberg block to add  image gallery 
 
 == Description ==
-This plugins lets you add product image gallery with gutenberg block on ctc-lite product page 
+This plugins lets you add  image gallery with gutenberg block
 
 == Installation ==
 
