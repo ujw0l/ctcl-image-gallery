@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', () => {
 
 
-    new jsOverlay({ imgGallery: '.ctclig-image-list', containerHt: 700, containerWd: 900, });
+    new ctcOverlayViewer('.ctclig-image-list')
     document.querySelector('body').style.overflow = '';
 
     Array.from(document.querySelectorAll('.ctcl-image-gallery')).map(x => {

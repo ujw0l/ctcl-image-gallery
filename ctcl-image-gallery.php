@@ -1,16 +1,16 @@
 <?php
 /*
  Plugin Name:CTCL Image Gallery
+ Donate link: https://www.patreon.com/ujw0l/membership
  Plugin URI :https://github.com/ujw0l/ctcl-image-gallery
  Description: CTC Lite gutenberg block addon to add image gallery 
- Version: 1.0.0
- Author: Ujwol Bastakoti
+ Version: 2.0.0
+ Author: UjW0L
  Author URI:https://ujw0l.github.io/
  Text Domain:  ctcl-image-gallery
  License: GPLv2
 */
 
-if(class_exists('ctcLite')){
 
     class ctclImageGal{
 
@@ -40,7 +40,7 @@ if(class_exists('ctcLite')){
    */
 
   public function enequeFrontendJs(){
-    wp_enqueue_script('ctclJsOverlay', CTCL_DIR_PATH.'js/js-overlay.js',array());
+    wp_enqueue_script('ctclJsOverlay', CTCLIG_DIR_PATH.'js/ctc_overlay.js',array());
     wp_enqueue_script('ctcligFrontendJs', CTCLIG_DIR_PATH.'js/ctcl-image-gal-fe.js',array('ctclJsOverlay'));
   }
 
@@ -101,21 +101,6 @@ wp_register_script(
   }
     }
     new ctclImageGal();
-}
-        else{
 
-            add_thickbox();
-           /**
-            * If main plugin CTC lite is not installed
-            */
-            add_action( 'admin_notices', function(){
-                echo '<div class="notice notice-error is-dismissible"><p>';
-                 _e( 'CTCL Image gallery plugin requires CTC Lite plugin installed and activated to work, please do so first.', 'ctcl-image-gallery' );
-                 echo '<a href="'.admin_url('plugin-install.php').'?tab=plugin-information&plugin=ctc-lite&TB_iframe=true&width=640&height=500" class="thickbox">'.__('Click Here to install it','ctcl-image-gallery').' </a>'; 
-                echo '</p></div>';
-            } );
-        }
-        
-        
 
     
