@@ -1,4 +1,4 @@
-.<?php
+<?php
 /**
  * Plugin Name:       CTCL Image Gallery
  * Description:       Gutenberg block to add  image gallery 

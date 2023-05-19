@@ -16,7 +16,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var ctcl_image_gallery_ctcl_image_gallery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ctcl-image-gallery/ctcl-image-gallery */ "./node_modules/ctcl-image-gallery/ctcl-image-gallery.js");
+/* harmony import */ var ctcl_image_gallery_ctcl_image_gallery_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ctcl-image-gallery/ctcl-image-gallery.js */ "./node_modules/ctcl-image-gallery/ctcl-image-gallery.js");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
@@ -66,37 +66,70 @@ function Edit(_ref) {
     attributes,
     setAttributes
   } = _ref;
+  const elRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)('');
+
   //setAttributes({ clntId: clientId });
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     let ctclElem = document.querySelector(`#ctcl-ig-main-img-${attributes.clntId}`);
-    0 < attributes.galItems.length && new ctcl_image_gallery_ctcl_image_gallery__WEBPACK_IMPORTED_MODULE_2__.ctclImgGal('.ctcl-image-gallery-block', {
-      mainImgHt: attributes.mainImgHt,
-      mainImageWd: attributes.mainImgWd,
-      imageEvent: 'mouseenter',
-      callBack: el => el.style.display = ''
-    });
-
-    /*
     if (null != ctclElem) {
-    	setAttributes({ mainImgFinalWd: ctclElem.offsetWidth });
-    	setAttributes({ mainImgFinalHt: ctclElem.offsetHeight })
+      setAttributes({
+        mainImgFinalWd: ctclElem.offsetWidth
+      });
+      setAttributes({
+        mainImgFinalHt: ctclElem.offsetHeight
+      });
     }
-    */
   }, [attributes.mainImgHt, attributes.mainImgWd, attributes.galItems]);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.useBlockProps)(), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "ctcl-image-gallery-block",
+    ref: elRef
+  }, 0 < attributes.mainImage.length && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    "data-img-num": "0",
+    "data-ts": attributes.clntId,
+    className: 'ctclig-main-image',
+    id: `ctcl-ig-main-img-${attributes.clntId}`,
     style: {
-      display: 'none'
+      width: `${attributes.mainImgWd}px`,
+      height: `${attributes.mainImgHt}px`,
+      backgroundImage: `url("${attributes.mainImage}")`
     }
-  }, 0 > attributes.galItems.length && attributes.galItems.map((x, i) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+  }), 0 < attributes.galItems.length && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: 'ctclig-image-list',
+    style: {
+      width: `${attributes.mainImgFinalWd}px`,
+      height: '74px',
+      overflowX: 'auto',
+      overflowY: 'hidden',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      display: 'block'
+    }
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    style: {
+      width: `${attributes.galItems.length * 76}px`,
+      overflowX: 'auto',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      display: 'block'
+    }
+  }, attributes.galItems.map((x, i) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     key: i,
     id: `ctclif-gal-img-${attributes.clntId}-${i}`,
     "data-ts": `${attributes.clntId}`,
     "data-image-num": i,
+    style: {
+      border: '1px solid rgba(0,0,0,1)',
+      width: '70px',
+      height: '70px',
+      margin: '2px'
+    },
     className: "ctclg-gal-img",
+    onMouseOver: () => setAttributes({
+      mainImage: x.url
+    }),
     title: x.caption,
     src: x.url
-  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     style: {
       border: '1px solid rgb(61, 148, 218)',
       backgroundColor: 'rgba(255,255,255,1)'
@@ -326,6 +359,7 @@ class ctclImgGal{
  */
     createGal(el,opt){
 
+        el.innerHTML = '';
         let imgChngEvnt = undefined != opt && undefined != opt.imageEvent ? opt.imageEvent : 'click';
         let galWd = undefined != opt && undefined != opt.mainImgWd ? opt.mainImgWd : el.offsetWidth;
         let galHt = undefined != opt && undefined != opt.mainImgHt ? opt.mainImgHt : el.offsetHeight;
@@ -334,7 +368,7 @@ class ctclImgGal{
         mainImgDiv.classList.add('ctclig-main-image');
         mainImgDiv.style = `width:${galWd}px; height :${galHt}px ;background: url("") center center / contain no-repeat rgb(255, 255, 255,0.5); margin-left:auto;margin-right:auto;display: block;`;
        mainImgDiv.innerHTML = `<span style='font-size:30px;position:relative; top: ${(galHt/2)-5}px; left: ${(galWd/2)-5}px ;' >Loading</span>`; 
-        el.insertBefore(mainImgDiv,el.querySelector('img'));
+       el.appendChild( mainImgDiv);
 
       
 
@@ -354,7 +388,7 @@ class ctclImgGal{
     
         carouselDivCont.appendChild(carouselDiv);
 
-        el.insertBefore(carouselDivCont,el.querySelector('img'));
+        el.appendChild(carouselDivCont);
 
         
             Array.from(el.querySelectorAll('img')).map((y,i) => {
@@ -383,6 +417,7 @@ class ctclImgGal{
                     e.target.addEventListener(imgChngEvnt, e => {
                         mainImgDiv.setAttribute('data-num',i);
                         mainImgDiv.style.backgroundImage = `url("${e.target.src}")`;
+                        e.target.scrollIntoView({ behavior: "smooth", block:'nearest', inline: "center" });
                     });
 
                     carouselDiv.appendChild(e.target)

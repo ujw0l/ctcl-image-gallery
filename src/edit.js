@@ -1,7 +1,7 @@
 
 
-import { useEffect } from 'react';
-import {ctclImgGal} from 'ctcl-image-gallery/ctcl-image-gallery'
+import { useEffect, useRef } from 'react';
+import {ctclImgGal} from 'ctcl-image-gallery/ctcl-image-gallery.js'
 import { RangeControl,PanelBody, Button } from '@wordpress/components';
 
 
@@ -38,35 +38,33 @@ import './editor.scss';
  */
 export default function Edit({clientId,attributes,setAttributes}) { 
 
-
+	const elRef = useRef('');
 
 	//setAttributes({ clntId: clientId });
 	useEffect(() => {
 		let ctclElem = document.querySelector(`#ctcl-ig-main-img-${attributes.clntId}`);
-
-
-		0<attributes.galItems.length && new ctclImgGal('.ctcl-image-gallery-block',{
-			mainImgHt: attributes.mainImgHt,
-			mainImageWd : attributes.mainImgWd,
-			imageEvent : 'mouseenter',
-			callBack : el=>el.style.display = '',
-		});
-	
-		/*
+		
 		if (null != ctclElem) {
 			setAttributes({ mainImgFinalWd: ctclElem.offsetWidth });
 			setAttributes({ mainImgFinalHt: ctclElem.offsetHeight })
 		}
-
-*/
 	}, [attributes.mainImgHt, attributes.mainImgWd, attributes.galItems])
 
 
 	return (
 		<div { ...useBlockProps() }>
-			<div className='ctcl-image-gallery-block' style={{display:'none'}} >
+			<div className='ctcl-image-gallery-block' ref={elRef} >
+
+				{ 0 < attributes.mainImage.length  && <div data-img-num= '0' data-ts= {attributes.clntId} className= {'ctclig-main-image'} id= {`ctcl-ig-main-img-${attributes.clntId}`} style={ { width: `${attributes.mainImgWd}px`, height: `${attributes.mainImgHt}px`, backgroundImage: `url("${attributes.mainImage}")`}} ></div>	}
  {
-	  0 > attributes.galItems.length && attributes.galItems.map((x,i)=> <img key = {i} id={ `ctclif-gal-img-${attributes.clntId}-${i}`} data-ts= {`${attributes.clntId}`}  data-image-num= {i}  className= 'ctclg-gal-img'  title= {x.caption} src= {x.url}  /> )
+
+	 
+	  0 < attributes.galItems.length && <div  className= {'ctclig-image-list'} style={ { width: `${attributes.mainImgFinalWd}px`, height: '74px', overflowX: 'auto', overflowY: 'hidden', marginLeft: 'auto', marginRight: 'auto', display: 'block' } }>
+		<div style={ { width: `${attributes.galItems.length * 76}px`, overflowX:'auto', marginLeft: 'auto', marginRight: 'auto', display: 'block' }}>{
+		 attributes.galItems.map((x,i)=> <img key = {i} id={ `ctclif-gal-img-${attributes.clntId}-${i}`} data-ts= {`${attributes.clntId}`}  data-image-num= {i}  style = {{border: '1px solid rgba(0,0,0,1)', width: '70px', height: '70px', margin: '2px'}} className= 'ctclg-gal-img' onMouseOver= {() => setAttributes({ mainImage: x.url })} title= {x.caption} src= {x.url}  /> )
+		}</div>
+		</div>
+
  }
 			</div>
 
