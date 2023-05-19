@@ -38,34 +38,53 @@ import './editor.scss';
  */
 export default function Edit({clientId,attributes,setAttributes}) { 
 
-	const elRef = useRef('');
+	const firstLoad = useRef(true);
+	const elRef = useRef(false);
 
-	//setAttributes({ clntId: clientId });
+	
+	setAttributes({ clntId: clientId });
 	useEffect(() => {
-		let ctclElem = document.querySelector(`#ctcl-ig-main-img-${attributes.clntId}`);
+
+        let galCont =   document.querySelector(`#ctcl-img-gal-${attributes.clntId}`);
+		let ctclElem =   galCont.querySelector('.ctclig-main-image');
 		
 		if (null != ctclElem) {
 			setAttributes({ mainImgFinalWd: ctclElem.offsetWidth });
 			setAttributes({ mainImgFinalHt: ctclElem.offsetHeight })
 		}
+	
+		
+		if( firstLoad.current ){
+
+			firstLoad.current = false;	
+			if(null != galCont.querySelector('.ctclig-main-image')){
+				
+				galCont.querySelector('.ctclig-main-image').remove();
+				galCont.querySelector('.ctclig-image-cont').remove();
+				
+			}
+			 0 < attributes.galItems.length &&	new ctclImgGal( `#ctcl-img-gal-${attributes.clntId}`, {  mainImgHt: attributes.mainImgFinalHt , mainImgWd:attributes.mainImgFinalWd, imageEvent:'mousemove' , callBack: el=> el.style.opacity = ''});
+		}else{
+			let mainImgDiv = galCont.querySelector('.ctclig-main-image');
+            mainImgDiv.style.height = attributes.mainImgHt+'px';
+			mainImgDiv.style.width = attributes.mainImgWd+'px';
+			galCont.querySelector('.ctclig-image-cont').style.width = mainImgDiv.offsetWidth+'px';
+		}
+		
+		
+		
 	}, [attributes.mainImgHt, attributes.mainImgWd, attributes.galItems])
 
 
 	return (
 		<div { ...useBlockProps() }>
-			<div className='ctcl-image-gallery-block' ref={elRef} >
+			<div className='ctcl-image-gallery-block' id={`ctcl-img-gal-${attributes.clntId}`} ref={elRef} data-height={attributes.mainImageHt} data-width={attributes.mainImageWd} style={{opacity:'0', height:attributes.mainImageHt+'px', width:attributes.mainImageWd+'px'  }} >
 
-				{ 0 < attributes.mainImage.length  && <div data-img-num= '0' data-ts= {attributes.clntId} className= {'ctclig-main-image'} id= {`ctcl-ig-main-img-${attributes.clntId}`} style={ { width: `${attributes.mainImgWd}px`, height: `${attributes.mainImgHt}px`, backgroundImage: `url("${attributes.mainImage}")`}} ></div>	}
  {
-
-	 
-	  0 < attributes.galItems.length && <div  className= {'ctclig-image-list'} style={ { width: `${attributes.mainImgFinalWd}px`, height: '74px', overflowX: 'auto', overflowY: 'hidden', marginLeft: 'auto', marginRight: 'auto', display: 'block' } }>
-		<div style={ { width: `${attributes.galItems.length * 76}px`, overflowX:'auto', marginLeft: 'auto', marginRight: 'auto', display: 'block' }}>{
-		 attributes.galItems.map((x,i)=> <img key = {i} id={ `ctclif-gal-img-${attributes.clntId}-${i}`} data-ts= {`${attributes.clntId}`}  data-image-num= {i}  style = {{border: '1px solid rgba(0,0,0,1)', width: '70px', height: '70px', margin: '2px'}} className= 'ctclg-gal-img' onMouseOver= {() => setAttributes({ mainImage: x.url })} title= {x.caption} src= {x.url}  /> )
-		}</div>
-		</div>
-
+	  0 < attributes.galItems.length && attributes.galItems.map((x,i)=> <img key = {i} id={ `ctclif-gal-img-${attributes.clntId}-${i}`} data-ts= {`${attributes.clntId}`}  data-image-num= {i}  style = {{ width: '70px', height: '70px', margin: '2px'}} className= 'ctclg-gal-img' onMouseOver= {() => setAttributes({ mainImage: x.url })} title= {x.caption} src= {x.url}  /> )
  }
+
+ 
 			</div>
 
 
@@ -77,8 +96,11 @@ export default function Edit({clientId,attributes,setAttributes}) {
 					 value= {attributes.galItems.map(x => x.id)}
 					 gallery= {true}
 					 onSelect={ gal => {
+					
+						
                         setAttributes({ galItems: gal });
                         setAttributes({ mainImage: gal[0].url });
+						firstLoad.current = true;
                     }}
 						allowedTypes={['image']}
 						render={({ open }) => (

@@ -15,10 +15,15 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {WPElement} Element to render.
  */
-export default function save() {
+export default function save({attributes}) {
 	return (
-		<p { ...useBlockProps.save() }>
-			{ 'Ctcl Image Gallery – hello from the saved content!' }
-		</p>
+		<div { ...useBlockProps.save() }    >
+			<div id={`ctcl-gallery-${attributes.clntId}`} data-clntid={attributes.clntId} style={ {opacity:'0' , width: attributes.mainImgFinalWd+'px' , height:attributes.mainImgFinalHt+'px' } } className = 'ctcl-gallery' data-width = {attributes.mainImgWd}  data-height={attributes.mainImgHt}  > 
+			
+{
+			0 < attributes.galItems.length && attributes.galItems.map((x,i)=><img  className = 'ctclg-gal-img' id={`ctclif-gal-img-${attributes.clntId}-${i}`} data-ts= { `${attributes.clntId}`} data-image-num= {i} style= {{ margin: '2px'}}  key= {i} title= {x.caption} src= {x.url}    />)
+}
+</div>
+		</div>
 	);
 }

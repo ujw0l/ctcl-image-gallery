@@ -66,11 +66,14 @@ function Edit(_ref) {
     attributes,
     setAttributes
   } = _ref;
-  const elRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)('');
-
-  //setAttributes({ clntId: clientId });
+  const firstLoad = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(true);
+  const elRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(false);
+  setAttributes({
+    clntId: clientId
+  });
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    let ctclElem = document.querySelector(`#ctcl-ig-main-img-${attributes.clntId}`);
+    let galCont = document.querySelector(`#ctcl-img-gal-${attributes.clntId}`);
+    let ctclElem = galCont.querySelector('.ctclig-main-image');
     if (null != ctclElem) {
       setAttributes({
         mainImgFinalWd: ctclElem.offsetWidth
@@ -79,46 +82,42 @@ function Edit(_ref) {
         mainImgFinalHt: ctclElem.offsetHeight
       });
     }
+    if (firstLoad.current) {
+      firstLoad.current = false;
+      if (null != galCont.querySelector('.ctclig-main-image')) {
+        galCont.querySelector('.ctclig-main-image').remove();
+        galCont.querySelector('.ctclig-image-cont').remove();
+      }
+      0 < attributes.galItems.length && new ctcl_image_gallery_ctcl_image_gallery_js__WEBPACK_IMPORTED_MODULE_2__.ctclImgGal(`#ctcl-img-gal-${attributes.clntId}`, {
+        mainImgHt: attributes.mainImgFinalHt,
+        mainImgWd: attributes.mainImgFinalWd,
+        imageEvent: 'mousemove',
+        callBack: el => el.style.opacity = ''
+      });
+    } else {
+      let mainImgDiv = galCont.querySelector('.ctclig-main-image');
+      mainImgDiv.style.height = attributes.mainImgHt + 'px';
+      mainImgDiv.style.width = attributes.mainImgWd + 'px';
+      galCont.querySelector('.ctclig-image-cont').style.width = mainImgDiv.offsetWidth + 'px';
+    }
   }, [attributes.mainImgHt, attributes.mainImgWd, attributes.galItems]);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.useBlockProps)(), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "ctcl-image-gallery-block",
-    ref: elRef
-  }, 0 < attributes.mainImage.length && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    "data-img-num": "0",
-    "data-ts": attributes.clntId,
-    className: 'ctclig-main-image',
-    id: `ctcl-ig-main-img-${attributes.clntId}`,
+    id: `ctcl-img-gal-${attributes.clntId}`,
+    ref: elRef,
+    "data-height": attributes.mainImageHt,
+    "data-width": attributes.mainImageWd,
     style: {
-      width: `${attributes.mainImgWd}px`,
-      height: `${attributes.mainImgHt}px`,
-      backgroundImage: `url("${attributes.mainImage}")`
+      opacity: '0',
+      height: attributes.mainImageHt + 'px',
+      width: attributes.mainImageWd + 'px'
     }
-  }), 0 < attributes.galItems.length && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: 'ctclig-image-list',
-    style: {
-      width: `${attributes.mainImgFinalWd}px`,
-      height: '74px',
-      overflowX: 'auto',
-      overflowY: 'hidden',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      display: 'block'
-    }
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    style: {
-      width: `${attributes.galItems.length * 76}px`,
-      overflowX: 'auto',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      display: 'block'
-    }
-  }, attributes.galItems.map((x, i) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+  }, 0 < attributes.galItems.length && attributes.galItems.map((x, i) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     key: i,
     id: `ctclif-gal-img-${attributes.clntId}-${i}`,
     "data-ts": `${attributes.clntId}`,
     "data-image-num": i,
     style: {
-      border: '1px solid rgba(0,0,0,1)',
       width: '70px',
       height: '70px',
       margin: '2px'
@@ -129,7 +128,7 @@ function Edit(_ref) {
     }),
     title: x.caption,
     src: x.url
-  }))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     style: {
       border: '1px solid rgb(61, 148, 218)',
       backgroundColor: 'rgba(255,255,255,1)'
@@ -146,6 +145,7 @@ function Edit(_ref) {
       setAttributes({
         mainImage: gal[0].url
       });
+      firstLoad.current = true;
     },
     allowedTypes: ['image'],
     render: _ref2 => {
@@ -310,8 +310,33 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @return {WPElement} Element to render.
  */
-function save() {
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save(), 'Ctcl Image Gallery – hello from the saved content!');
+function save(_ref) {
+  let {
+    attributes
+  } = _ref;
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save(), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    id: `ctcl-gallery-${attributes.clntId}`,
+    "data-clntid": attributes.clntId,
+    style: {
+      opacity: '0',
+      width: attributes.mainImgFinalWd + 'px',
+      height: attributes.mainImgFinalHt + 'px'
+    },
+    className: "ctcl-gallery",
+    "data-width": attributes.mainImgWd,
+    "data-height": attributes.mainImgHt
+  }, 0 < attributes.galItems.length && attributes.galItems.map((x, i) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    className: "ctclg-gal-img",
+    id: `ctclif-gal-img-${attributes.clntId}-${i}`,
+    "data-ts": `${attributes.clntId}`,
+    "data-image-num": i,
+    style: {
+      margin: '2px'
+    },
+    key: i,
+    title: x.caption,
+    src: x.url
+  }))));
 }
 
 /***/ }),
@@ -359,21 +384,26 @@ class ctclImgGal{
  */
     createGal(el,opt){
 
-        el.innerHTML = '';
         let imgChngEvnt = undefined != opt && undefined != opt.imageEvent ? opt.imageEvent : 'click';
         let galWd = undefined != opt && undefined != opt.mainImgWd ? opt.mainImgWd : el.offsetWidth;
         let galHt = undefined != opt && undefined != opt.mainImgHt ? opt.mainImgHt : el.offsetHeight;
-        el.classList.add('ctclig-image-list');
+
+
+        let evryTngCont = document.createElement('div');
+        evryTngCont.classList.add('ctclig-image-list');
+        el.appendChild(evryTngCont);
+
         let mainImgDiv =  document.createElement('div');
         mainImgDiv.classList.add('ctclig-main-image');
         mainImgDiv.style = `width:${galWd}px; height :${galHt}px ;background: url("") center center / contain no-repeat rgb(255, 255, 255,0.5); margin-left:auto;margin-right:auto;display: block;`;
        mainImgDiv.innerHTML = `<span style='font-size:30px;position:relative; top: ${(galHt/2)-5}px; left: ${(galWd/2)-5}px ;' >Loading</span>`; 
-       el.appendChild( mainImgDiv);
+        evryTngCont.appendChild(mainImgDiv);
 
       
 
         let carouselDivCont = document.createElement('div')
         carouselDivCont.style.width = `${galWd}px`,
+        carouselDivCont.classList.add('ctclig-image-cont');
         carouselDivCont.style.overflowX = 'auto';
         carouselDivCont.style.overflowY = "hidden"
         carouselDivCont.style.marginLeft = 'auto';
@@ -388,20 +418,26 @@ class ctclImgGal{
     
         carouselDivCont.appendChild(carouselDiv);
 
-        el.appendChild(carouselDivCont);
+        evryTngCont.appendChild(carouselDivCont);
 
         
             Array.from(el.querySelectorAll('img')).map((y,i) => {
 
 
               y.style.display = 'none';
-                y.addEventListener('load',e =>{
+
+              let img = new Image();
+            
+              img.src = y.src
+            
+              img.addEventListener('load',e =>{
 
                 
-             
+          
                     if('' != mainImgDiv.innerHTML){
                         mainImgDiv.innerHTML = '';
-                        mainImgDiv.style.backgroundImage = `url("${el.querySelector('img').src}")`;
+                        mainImgDiv.setAttribute('data-num',i);
+                        mainImgDiv.style.backgroundImage = `url("${e.target.src}")`;
                     }
 
                   
@@ -417,7 +453,6 @@ class ctclImgGal{
                     e.target.addEventListener(imgChngEvnt, e => {
                         mainImgDiv.setAttribute('data-num',i);
                         mainImgDiv.style.backgroundImage = `url("${e.target.src}")`;
-                        e.target.scrollIntoView({ behavior: "smooth", block:'nearest', inline: "center" });
                     });
 
                     carouselDiv.appendChild(e.target)
