@@ -41,3 +41,7 @@ This section describes how to install the plugin and get it working.
 * Depedency to CTC Lite removed
 * CTC overlay used instead of Js Overlay
 
+= 2.1.0 =
+*JSX used 
+*Minified version of Js
+

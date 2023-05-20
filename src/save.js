@@ -18,12 +18,16 @@ import { useBlockProps } from '@wordpress/block-editor';
 export default function save({attributes}) {
 	return (
 		<div { ...useBlockProps.save() }    >
-			<div id={`ctcl-gallery-${attributes.clntId}`} data-clntid={attributes.clntId} style={ {opacity:'0' , width: attributes.mainImgFinalWd+'px' , height:attributes.mainImgFinalHt+'px' } } className = 'ctcl-gallery' data-width = {attributes.mainImgWd}  data-height={attributes.mainImgHt}  > 
+		
 			
 {
-			0 < attributes.galItems.length && attributes.galItems.map((x,i)=><img  className = 'ctclg-gal-img' id={`ctclif-gal-img-${attributes.clntId}-${i}`} data-ts= { `${attributes.clntId}`} data-image-num= {i} style= {{ margin: '2px'}}  key= {i} title= {x.caption} src= {x.url}    />)
+			0 < attributes.galItems.length && 	<div id={`ctcl-gallery-${attributes.clntId}`} data-clntid={attributes.clntId} style={ {   marginLeft:'auto', marginRight : 'auto',display:'block',    opacity:'0' , width: attributes.mainImgFinalWd+'px' , height:attributes.mainImgFinalHt+'px' } } className = 'ctcl-gallery' data-width = {attributes.mainImgWd}  data-height={attributes.mainImgHt}  > 
+			{
+			 attributes.galItems.map((x,i)=><img  className = 'ctclg-gal-img' id={`ctclif-gal-img-${attributes.clntId}-${i}`} data-ts= { `${attributes.clntId}`} data-image-num= {i} style= {{ margin: '2px'}}  key= {i} title= {x.caption} src= {x.url}    />)
+			}
+			</div>
 }
-</div>
+
 		</div>
 	);
 }

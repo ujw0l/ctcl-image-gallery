@@ -28,6 +28,7 @@ import metadata from './block.json';
  */
 registerBlockType( metadata.name, {
 
+	keywords: [__('Gallery', 'ctcl-image-gallery'), __('image gallery', 'ctcl-image-gallery')],
 
 	attributes: {
         galItems: { type: 'Array', default: [] },
