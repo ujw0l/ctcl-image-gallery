@@ -8,13 +8,14 @@ Requires PHP:      7.4.9
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Gutenberg block to add  image gallery 
+Gutenberg block to add  image gallery
 
-== Description ==
-This plugins lets you add 
-
-This section describes how to install the plugin and get it working.
-
+	== Description ==
+	This plugins lets you add  image gallery with gutenberg block
+	
+	== Installation ==
+	
+	This section describes how to install the plugin and get it working.	
 
 1. Upload the plugin files to the `/wp-content/plugins/ctcl-image-gallery` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress

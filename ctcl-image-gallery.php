@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       CTCL Image Gallery
  * Description:       Gutenberg block to add  image gallery 
- * Requires at least: 6.2
+ * Requires at least: 6.2.2
  * Requires PHP:      7.0
  * Version:           2.1.0
  * Author:            The WordPress Contributors
