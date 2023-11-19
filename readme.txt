@@ -46,3 +46,7 @@ Gutenberg block to add  image gallery
 *JSX used 
 *Minified version of Js
 
+= 2.1.1 =
+*Icon changed 
+*Minor fixes
+
