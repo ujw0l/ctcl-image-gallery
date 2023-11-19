@@ -91,7 +91,7 @@ export default function Edit({clientId,attributes,setAttributes}) {
 			<div  style={ { border: '1px solid rgb(61, 148, 218)', backgroundColor: 'rgba(255,255,255,1)', } }>
 			<MediaUploadCheck>
 					<MediaUpload
-					 title={ __('Select  product images for gallery ', 'ctcl-image-gallery')}
+					 title={ __('Select  images for gallery ', 'ctcl-image-gallery')}
 					 multiple={ true}
 					 value= {attributes.galItems.map(x => x.id)}
 					 gallery= {true}
@@ -106,8 +106,8 @@ export default function Edit({clientId,attributes,setAttributes}) {
 						render={({ open }) => (
 
 							<div  style= {{ width: '100%', backgroundColor: 'rgba(255,255,,255,1)', color: 'rgb(61, 148, 218)', padding: '10px' }}>
-							<h4 className= 'dashicons-before dashicons-format-gallery'>{__('Product Image Gallery ','ctcl-image-gallery')}</h4>
-							<Button style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block', color: 'rgb(61, 148, 218)', border: '1px solid rgb(61, 148, 218)'}} className= {"ctclig-media-button dashicons-before dashicons-format-gallery"}  onClick={open}>{__(" Select Images", "ctcl-image-gallery")}</Button>
+							<h4 className= 'dashicons-before dashicons-cover-image'>{__(' Image Gallery ','ctcl-image-gallery')}</h4>
+							<Button style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block', color: 'rgb(61, 148, 218)', border: '1px solid rgb(61, 148, 218)'}} className= {"ctclig-media-button dashicons-before dashicons-cover-image"}  onClick={open}>{__(" Select Images", "ctcl-image-gallery")}</Button>
 						</div>
 						)}
 					/>

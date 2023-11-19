@@ -2,10 +2,10 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
 	"name": "ctcl-image-gallery/ctcl-image-gallery",
-	"version": "0.1.0",
+	"version": "2.1.1",
 	"title": "CTCL Image Gallery",
 	"category": "media",
-	"icon":  "format-gallery",
+	"icon":  "cover-image",
 	"description": "Gutenberg block addon to add image gallery.",
 	"supports": {
 		"html": false
