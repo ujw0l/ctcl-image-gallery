@@ -2,8 +2,8 @@
 Contributors:      UjW0L
 Donate link: https://www.patreon.com/ujw0l/membership
 Tags:              block, ctc-lite, image-gallery
-Tested up to:      6.2.2
-Stable tag:        2.1.1
+Tested up to:      6.5
+Stable tag:        2.2.0
 Requires PHP:      7.4.9
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -49,4 +49,9 @@ Gutenberg block to add  image gallery
 = 2.1.1 =
 *Icon changed 
 *Minor fixes
+
+= 2.2.0 =
+*Bug Fixes
+*overlay removed
+
 
