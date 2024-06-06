@@ -69,6 +69,8 @@ export default function Edit({clientId,attributes,setAttributes}) {
             mainImgDiv.style.height = attributes.mainImgHt+'px';
 			mainImgDiv.style.width = attributes.mainImgWd+'px';
 			galCont.querySelector('.ctclig-image-cont').style.width = mainImgDiv.offsetWidth+'px';
+
+			
 		}
 		
 		
