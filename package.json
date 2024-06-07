@@ -1,6 +1,6 @@
 {
 	"name": "ctcl-image-gallery",
-	"version": "2.2.0",
+	"version": "2.2.1",
 	"description": "Example block scaffolded with Create Block tool.",
 	"author": "The WordPress Contributors",
 	"license": "GPL-2.0-or-later",
@@ -19,6 +19,6 @@
 	},
 	"dependencies": {
 		"ctc-gallery-viewer": "^1.6.0",
-		"ctcl-image-gallery": "^1.1.2"
+		"ctcl-image-gallery": "^1.2.0"
 	}
 }
