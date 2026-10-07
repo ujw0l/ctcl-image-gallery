@@ -1,22 +1,75 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
-	"name": "ctcl-image-gallery/ctcl-image-gallery",
-	"version": "2.1.1",
-	"title": "CTCL Image Gallery",
-	"category": "media",
-	"icon":  "cover-image",
-	"description": "Gutenberg block addon to add image gallery.",
-	"supports": {
-		"html": false
-	},
-"example":{
-	
-},
-	"textdomain": "ctcl-image-gallery",
-	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css",
-	"viewScript":"file:./frontend.js"
-
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ctcl-image-gallery/ctcl-image-gallery",
+  "version": "2.3.0",
+  "title": "CTCL Image Gallery",
+  "category": "media",
+  "icon": "cover-image",
+  "description": "Explore a large photograph with an interactive thumbnail strip.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "anchor": true
+  },
+  "textdomain": "ctcl-image-gallery",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./frontend.js",
+  "attributes": {
+    "galItems": {
+      "type": "array",
+      "default": []
+    },
+    "mainImage": {
+      "type": "string",
+      "default": ""
+    },
+    "clntId": {
+      "type": "string",
+      "default": ""
+    },
+    "mainImgWd": {
+      "type": "number",
+      "default": 450
+    },
+    "mainImgHt": {
+      "type": "number",
+      "default": 700
+    },
+    "mainImgFinalWd": {
+      "type": "number",
+      "default": 450
+    },
+    "mainImgFinalHt": {
+      "type": "number",
+      "default": 700
+    },
+    "cornerRadius": {
+      "type": "number",
+      "default": 18
+    },
+    "surface": {
+      "type": "string",
+      "default": "soft"
+    },
+    "imageFit": {
+      "type": "string",
+      "default": "cover"
+    },
+    "galleryLabel": {
+      "type": "string",
+      "default": "Image gallery"
+    }
+  },
+  "keywords": [
+    "gallery",
+    "images",
+    "photography"
+  ]
 }

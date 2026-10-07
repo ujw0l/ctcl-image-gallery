@@ -1,0 +1,1 @@
+The original MIT-licensed ctcl-image-gallery and ctc-gallery-viewer libraries are retained under vendor/, including their license files. Gallery integration and styling follow the CTC Gallery lightbox implementation from the referenced local project.
